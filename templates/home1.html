@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MovieMagic - Home</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #e50914;
+            --bg-color: #0a0a0a;
+            --secondary-color: #2a2a2a;
+            --text-color: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.8);
+            --shadow-primary: 0 4px 15px rgba(229, 9, 20, 0.3);
+            --transition-standard: all 0.3s ease;
+            --border-radius-standard: 8px;
+            --border-radius-pill: 25px;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background: var(--bg-color);
+        }
+
+        nav {
+            display: flex;
+            justify-content: flex-end;
+            padding: 1rem 3rem;
+            background: rgba(8, 8, 8, 0.5);
+            align-items: center;
+            position: absolute;
+            width: 100%;
+            top: 0;
+            z-index: 999;
+            backdrop-filter: blur(5px);
+            box-sizing: border-box;
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 2rem;
+            margin-right: 2rem;
+        }
+
+        .nav-right a {
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: var(--border-radius-standard);
+            transition: var(--transition-standard);
+            background: rgba(40, 40, 40, 0.6);
+        }
+
+        .nav-right a:hover {
+            background: rgba(229, 9, 20, 0.8);
+            transform: translateY(-2px);
+        }
+
+        .dropdown {
+            position: absolute;
+            top: 30px;
+            left: 40px;
+            z-index: 1000;
+        }
+
+        .dropbtn {
+            background: rgba(229, 9, 20, 0.9);
+            color: var(--text-color);
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: var(--border-radius-pill);
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 700;
+            transition: var(--transition-standard);
+            box-shadow: var(--shadow-primary);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background: rgba(0, 0, 0, 0.9);
+            min-width: 160px;
+            border-radius: var(--border-radius-standard);
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content a {
+            color: var(--text-color);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background 0.3s ease;
+        }
+
+        .dropdown-content a:hover {
+            background: rgba(229, 9, 20, 0.5);
+        }
+
+        .header-section {
+            background: var(--bg-color);
+            min-height: 80vh;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .welcome-container {
+            text-align: center;
+            margin-top: 120px;
+            padding: 0 20px;
+            z-index: 1;
+        }
+
+        .welcome-message {
+            margin-bottom: 3rem;
+        }
+
+        .welcome-message h1 {
+            font-size: 3.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .welcome-message p {
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .search-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            z-index: 1;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .search-box select, 
+        .search-box input {
+            padding: 0.8rem;
+            border-radius: var(--border-radius-pill);
+            border: 2px solid var(--primary-color);
+            background: rgba(40, 40, 40, 0.8);
+            color: var(--text-color);
+            font-size: 1em;
+            width: 200px;
+        }
+
+        .search-box button {
+            padding: 0.8rem 2rem;
+            background: var(--primary-color);
+            color: var(--text-color);
+            border: none;
+            border-radius: var(--border-radius-pill);
+            cursor: pointer;
+            font-size: 1em;
+            transition: var(--transition-standard);
+        }
+
+        .search-box button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(229, 9, 20, 0.4);
+        }
+
+        .movies-section {
+            flex: 1;
+            background: var(--bg-color);
+            padding: 2rem 0;
+        }
+
+        .trending {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .movie-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 4rem;
+            padding: 2rem 0;
+            max-height: 60vh;
+        }
+
+        .movie-card {
+            background: rgba(30, 30, 30, 0.95);
+            border-radius: var(--border-radius-standard);
+            overflow: hidden;
+            transition: var(--transition-standard);
+            border: 2px solid rgba(229, 9, 20, 0.3);
+        }
+
+        .movie-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(229, 9, 20, 0.2);
+        }
+
+        .movie-poster {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        .movie-info {
+            padding: 1.2rem;
+            text-align: center;
+        }
+
+        .movie-title {
+            font-size: 1.2em;
+            margin: 0.5rem 0;
+        }
+
+        .movie-genre {
+            color: var(--text-muted);
+            font-size: 0.85em;
+        }
+
+        #movieResults {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            background: var(--bg-color);
+        }
+
+        .movie-card.search-result {
+            background: linear-gradient(145deg, rgba(229,9,20,0.1), rgba(42,42,42,0.95));
+            border: 2px solid var(--primary-color);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .movie-card.search-result:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 12px 25px rgba(229, 9, 20, 0.25);
+        }
+
+        .movie-info {
+            padding: 1.5rem;
+            text-align: left;
+        }
+
+        .movie-info h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.8rem;
+            font-size: 1.4rem;
+        }
+
+        .movie-info p {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 0.8rem;
+        }
+
+        .movie-info strong {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .showtimes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .showtime {
+            background: rgba(229, 9, 20, 0.15);
+            color: var(--primary-color);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .book-btn {
+            display: inline-block;
+            width: 100%;
+            padding: 0.8rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .book-btn:hover {
+            background: #ff1a1a;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(229, 9, 20, 0.3);
+        }
+
+        .price-tag {
+            background: rgba(78, 205, 196, 0.15);
+            color: #4ECDC4;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            font-weight: 700;
+            margin: 1rem 0;
+            display: inline-block;
+        }
+
+        .no-results {
+            text-align: center;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            padding: 2rem;
+            grid-column: 1 / -1;
+        }
+
+        .search-results-section {
+            background: var(--bg-color);
+            padding: 3rem 0;
+            border-top: 1px solid rgba(229, 9, 20, 0.3);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .search-results-section h2 {
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .search-results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            justify-items: center;
+        }
+
+        .search-result-card {
+            background: rgba(30, 30, 30, 0.9);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease-in-out;
+            border: 2px solid rgba(229, 9, 20, 0.3);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        .search-result-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px rgba(229, 9, 20, 0.15);
+            border-color: rgba(229, 9, 20, 0.5);
+        }
+
+        .result-poster {
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #000;
+        }
+
+        .result-poster img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.5s ease;
+        }
+
+        .result-details {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .result-title {
+            color: var(--primary-color);
+            font-size: 1.6rem;
+            margin: 0 0 0.8rem 0;
+        }
+
+        .result-description {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        .result-info {
+            margin-bottom: 1rem;
+        }
+
+        .result-languages {
+            margin-bottom: 0.8rem;
+        }
+
+        .result-languages strong {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .theater-selection {
+            margin-top: auto;
+            margin-bottom: 1rem;
+        }
+
+        .theater-dropdown {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            background-color: #2a2a2a;
+            border: 1px solid rgba(229, 9, 20, 0.3);
+            color: white;
+            margin-top: 5px;
+            cursor: pointer;
+        }
+
+        .theater-dropdown:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+
+        .result-action {
+            margin-top: 1rem;
+        }
+
+        #theaterModal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .modal-content {
+            background-color: var(--secondary-color);
+            margin: 10% auto;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 600px;
+            position: relative;
+        }
+
+        .close-modal {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-modal:hover {
+            color: var(--primary-color);
+        }
+
+        .theater-list {
+            margin: 20px 0;
+        }
+
+        .theater-item {
+            padding: 15px;
+            margin-bottom: 10px;
+            background-color: rgba(40, 40, 40, 0.8);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .theater-item:hover {
+            background-color: rgba(229, 9, 20, 0.2);
+        }
+
+        .theater-item.selected {
+            background-color: rgba(229, 9, 20, 0.5);
+        }
+
+        .proceed-btn {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .proceed-btn:hover {
+            background-color: #ff1a1a;
+        }
+
+        .proceed-btn:disabled {
+            background-color: #5a5a5a;
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 768px) {
+            .header-section {
+                min-height: 50vh;
+            }
+            
+            .dropdown {
+                top: 20px;
+                left: 20px;
+            }
+            
+            .nav-right {
+                margin-right: 1rem;
+                gap: 1rem;
+            }
+            
+            .search-container {
+                padding: 0 1rem;
+            }
+            
+            .search-box {
+                flex-direction: column;
+            }
+            
+            .search-box select, 
+            .search-box input {
+                width: 100%;
+            }
+            
+            .movie-grid {
+                max-height: 50vh;
+            }
+            
+            .welcome-message h1 {
+                font-size: 2.5rem;
+            }
+            
+            .welcome-message p {
+                font-size: 1.2rem;
+            }
+            
+            .movie-info {
+                padding: 1rem;
+            }
+            
+            .movie-info h3 {
+                font-size: 1.2rem;
+            }
+            
+            .book-btn {
+                padding: 0.6rem;
+                font-size: 0.9rem;
+            }
+
+            .modal-content {
+                width: 90%;
+                margin: 20% auto;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            nav {
+                padding: 1rem;
+            }
+            
+            .nav-right {
+                gap: 0.5rem;
+            }
+            
+            .nav-right a {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .welcome-message h1 {
+                font-size: 2rem;
+            }
+            
+            .welcome-message p {
+                font-size: 1rem;
+            }
+            
+            .search-box button {
+                padding: 0.8rem 1.5rem;
+            }
+            
+            .movie-grid {
+                gap: 2rem;
+            }
+
+            .search-results-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header-section">
+        <div class="dropdown">
+            <button class="dropbtn">MovieMagic</button>
+            <div class="dropdown-content">
+                <a href="{{ url_for('about') }}">About Us</a>
+                <a href="{{ url_for('contact') }}">Contact Us</a>
+            </div>
+        </div>
+
+        <nav>
+            <div class="nav-right">
+                <a href="{{ url_for('home1') }}">Home</a>
+                <a href="{{ url_for('logout') }}">Logout</a>
+            </div>
+        </nav>
+
+        <div class="welcome-container">
+            <div class="welcome-message">
+                <h1>Welcome to MovieMagic</h1>
+                <p>Your one-stop destination for movie tickets in Hyderabad</p>
+            </div>
+            <div class="search-container">
+                <form id="searchForm">
+                    <div class="search-box">
+                        <select id="language" aria-label="Select movie language">
+                            <option value="Telugu">Telugu</option>
+                            <option value="Hindi">Hindi</option>
+                            <option value="English">English</option>
+                            <option value="Tamil">Tamil</option>
+                        </select>
+                        <input type="text" id="city" placeholder="Enter City (e.g., Hyderabad)" aria-label="Enter city name" required>
+                        <button type="submit">Search</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="search-results-section" id="searchResultsSection" style="display: none;">
+        <div class="container">
+            <h2>Search Results</h2>
+            <div id="movieResults" class="search-results-grid"></div>
+        </div>
+    </div>
+
+    <div class="movies-section">
+        <div class="trending">
+            <h2>Top Trending Movies</h2>
+            <div class="movie-grid">
+                <div class="movie-card">
+                    <img src="../static/images/court.jpg" class="movie-poster" alt="Court">
+                    <div class="movie-info">
+                        <h3 class="movie-title">Court</h3>
+                        <p class="movie-genre">Action, Drama</p>
+                    </div>
+                </div>
+                
+                <div class="movie-card">
+                    <img src="../static/images/mad.jpg" class="movie-poster" alt="Mad^2">
+                    <div class="movie-info">
+                        <h3 class="movie-title">Mad^2</h3>
+                        <p class="movie-genre">Action, Historical</p>
+                    </div>
+                </div>
+                
+                <div class="movie-card">
+                    <img src="../static/images/robinhood.jpg" class="movie-poster" alt="Robinhood">
+                    <div class="movie-info">
+                        <h3 class="movie-title">Robinhood</h3>
+                        <p class="movie-genre">Action, Thriller</p>
+                    </div>
+                </div>
+
+                <div class="movie-card">
+                    <img src="../static/images/presence.jpg" class="movie-poster" alt="Presence">
+                    <div class="movie-info">
+                        <h3 class="movie-title">Presence</h3>
+                        <p class="movie-genre">Action, Thriller</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="theaterModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 id="modalMovieTitle">Select Theater & Showtime</h2>
+            <div id="theaterList" class="theater-list"></div>
+            <form id="bookingForm" action="{{ url_for('b1') }}" method="get">
+                <input type="hidden" id="selectedMovie" name="movie">
+                <input type="hidden" id="selectedTheater" name="theater">
+                <input type="hidden" id="selectedTheaterId" name="theaterId">
+                <input type="hidden" id="selectedTime" name="time">
+                <input type="hidden" id="selectedAddress" name="address">
+                <input type="hidden" id="moviePrice" name="price">
+                <button type="submit" id="proceedToBooking" class="proceed-btn" disabled>Proceed to Booking</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Movies data
+        const movies = [
+            { id: 1, name: "Pushpa: The Rise", description: "A laborer rises through the ranks of a smuggling syndicate, making powerful enemies along the way.", languages: ["Telugu", "Hindi", "Malayalam", "Kannada", "Tamil"], locations: [ { city: "hyderabad", theater: "PVR Inorbit Mall, Madhapur", address: "5th Floor, Inorbit Mall, Mindspace, Madhapur, Hyderabad" }, { city: "hyderabad", theater: "AMB Cinemas, Gachibowli", address: "Gachibowli, Hyderabad, Telangana 500032" } ], timings: ["10:00 AM", "2:30 PM", "6:00 PM", "9:30 PM"], price: 180, poster: "../static/images/puspha.jpeg" },
+            { id: 2, name: "RRR", description: "A fictional story about two legendary revolutionaries and their journey away from home.", languages: ["Telugu", "Hindi", "Tamil", "Kannada", "Malayalam"], locations: [ { city: "hyderabad", theater: "Prasads Multiplex, Necklace Road", address: "Necklace Road, Hyderabad, Telangana 500004" } ], timings: ["11:00 AM", "3:00 PM", "7:00 PM"], price: 200, poster: "../static/images/rrr.jpeg" },
+            { id: 3, name: "Baahubali 2: The Conclusion", description: "Shivudu learns about his past and fights for his kingdom against the evil Bhallaladeva.", languages: ["Telugu", "Hindi", "Tamil", "Malayalam"], locations: [ { city: "hyderabad", theater: "INOX GVK One, Banjara Hills", address: "GVK One Mall, Road No. 1, Banjara Hills, Hyderabad" } ], timings: ["10:30 AM", "3:30 PM", "7:30 PM"], price: 220, poster: "../static/images/bahubali.jpeg" },
+            { id: 4, name: "Sita Ramam", description: "A love story set against the backdrop of war where Lieutenant Ram has to fulfill his mission and find his Sita.", languages: ["Telugu", "Tamil", "Malayalam"], locations: [ { city: "hyderabad", theater: "Mirajkar Cinemas, Attapur", address: "City Mall, Attapur, Hyderabad" } ], timings: ["11:30 AM", "3:15 PM", "6:45 PM", "10:00 PM"], price: 190, poster: "../static/images/sitaramamm.jpeg" },
+            { id: 5, name: "Bimbisara", description: "A cruel king from ancient times travels to the present day through time travel and faces unexpected situations.", languages: ["Telugu", "Hindi"], locations: [ { city: "hyderabad", theater: "Asian Cinema, Uppal", address: "GSM Mall, Uppal, Hyderabad" } ], timings: ["9:45 AM", "1:15 PM", "4:45 PM", "8:15 PM"], price: 170, poster: "../static/images/bimbisara.jpeg" },
+            { id: 6, name: "Karthikeya 2", description: "A mystic adventure story about Dr. Karthikeya's quest to find the lost anklet of Lord Krishna.", languages: ["Telugu", "Hindi", "Kannada"], locations: [ { city: "hyderabad", theater: "PVR Icon, Hitech City", address: "Hitech City Main Road, Hyderabad" } ], timings: ["10:15 AM", "1:30 PM", "5:00 PM", "8:30 PM"], price: 175, poster: "../static/images/karthikeya.jpeg" },
+            { id: 7, name: "Mad^2", description: "A comedy-action film set in a college where a group of students take on corrupt authorities.", languages: ["Telugu", "Tamil"], locations: [ { city: "hyderabad", theater: "Sudarshan 35mm, RTC X Roads", address: "RTC X Roads, Hyderabad" } ], timings: ["9:30 AM", "12:30 PM", "3:30 PM", "6:30 PM", "9:30 PM"], price: 160, poster: "../static/images/mad.jpg" },
+            { id: 8, name: "Robinhood", description: "A young man from a village becomes a vigilante who steals from the rich to help the poor.", languages: ["Telugu", "Hindi"], locations: [ { city: "hyderabad", theater: "Sandhya 70MM, RTC X Roads", address: "RTC X Roads, Hyderabad" } ], timings: ["10:45 AM", "2:15 PM", "5:45 PM", "9:15 PM"], price: 165, poster: "../static/images/robinhood.jpg" },
+            { id: 9, name: "Pathaan", description: "An Indian spy embarks on a mission to take down a global terrorist organization.", languages: ["Hindi", "Tamil", "Telugu"], locations: [ { city: "hyderabad", theater: "PVR Irrum Manzil", address: "Next Galleria Mall, Irrum Manzil, Hyderabad" } ], timings: ["11:00 AM", "3:00 PM", "7:30 PM"], price: 180, poster: "../static/images/pathan2.jpeg" },
+            { id: 10, name: "Brahmastra", description: "A fantasy adventure about a young man who discovers he has supernatural powers.", languages: ["Hindi", "Telugu", "Tamil", "Malayalam", "Kannada"], locations: [ { city: "hyderabad", theater: "PVR Central, Panjagutta", address: "Central, Panjagutta, Hyderabad" } ], timings: ["10:15 AM", "1:45 PM", "5:15 PM", "8:45 PM"], price: 210, poster: "../static/images/bramhastra.jpeg" },
+            { id: 11, name: "Jawan", description: "A man with a mission takes on a powerful adversary to protect the nation from harm.", languages: ["Hindi", "Telugu", "Tamil"], locations: [ { city: "hyderabad", theater: "PVR Icon, Hitech City", address: "Hitech City, Hyderabad" } ], timings: ["9:30 AM", "1:00 PM", "4:30 PM", "8:00 PM", "11:30 PM"], price: 190, poster: "../static/images/jawan.jpeg" },
+            { id: 12, name: "Animal", description: "A son's love for his father turns obsessive, leading him down a dark path of violence and revenge.", languages: ["Hindi", "Telugu", "Tamil"], locations: [ { city: "hyderabad", theater: "PVR Central, Panjagutta", address: "Central, Panjagutta, Hyderabad" } ], timings: ["10:00 AM", "2:00 PM", "6:00 PM", "10:00 PM"], price: 220, poster: "../static/images/animal.jpeg" },
+            { id: 13, name: "Tiger 3", description: "Tiger is back on a mission to protect his country while also safeguarding his family.", languages: ["Hindi", "Telugu", "Tamil"], locations: [ { city: "hyderabad", theater: "PVR Icon, Hitech City", address: "Hitech City, Hyderabad" } ], timings: ["11:15 AM", "2:45 PM", "6:15 PM", "9:45 PM"], price: 200, poster: "../static/images/tiger3.jpeg" },
+            { id: 14, name: "Gangubai Kathiawadi", description: "The story of a girl who was sold into prostitution but rises to become a powerful figure in Mumbai's Kamathipura.", languages: ["Hindi"], locations: [ { city: "hyderabad", theater: "PVR Inorbit Mall, Madhapur", address: "Inorbit Mall, Madhapur, Hyderabad" } ], timings: ["10:30 AM", "2:15 PM", "6:00 PM", "9:45 PM"], price: 180, poster: "../static/images/gangubahi.jpeg" },
+            { id: 15, name: "Avatar: The Way of Water", description: "Jake Sully and Neytiri's family face new threats on Pandora.", languages: ["English", "Hindi", "Telugu", "Tamil", "Malayalam"], locations: [ { city: "hyderabad", theater: "PVR Icon, Hitech City", address: "Hitech City, Hyderabad" } ], timings: ["10:00 AM", "2:00 PM", "6:00 PM", "10:00 PM"], price: 300, poster: "../static/images/avathar.jpeg" },
+            { id: 16, name: "Oppenheimer", description: "The story of J. Robert Oppenheimer and his role in developing the atomic bomb.", languages: ["English", "Hindi"], locations: [ { city: "hyderabad", theater: "PVR Inorbit Mall, Madhapur", address: "Inorbit Mall, Madhapur, Hyderabad" } ], timings: ["11:30 AM", "3:15 PM", "7:00 PM", "10:45 PM"], price: 320, poster: "../static/images/oppenheimer.jpeg" },
+            { id: 17, name: "Dune: Part Two", description: "Paul Atreides unites with Chani and the Fremen while seeking revenge against the conspirators.", languages: ["English", "Hindi", "Telugu", "Tamil"], locations: [ { city: "hyderabad", theater: "PVR Kukatpally", address: "Kukatpally, Hyderabad" } ], timings: ["9:45 AM", "1:30 PM", "5:15 PM", "9:00 PM"], price: 310, poster: "../static/images/Dune.jpeg" },
+            { id: 18, name: "Presence", description: "A family discovers a paranormal presence in their new home and must fight to survive.", languages: ["English", "Hindi"], locations: [ { city: "hyderabad", theater: "PVR Icon, Hitech City", address: "Hitech City, Hyderabad" } ], timings: ["12:00 PM", "3:30 PM", "7:00 PM", "10:30 PM"], price: 280, poster: "../static/images/presence.jpg" },
+            { id: 19, name: "The Batman", description: "Batman uncovers corruption in Gotham City that connects to his own family.", languages: ["English", "Hindi", "Telugu", "Tamil"], locations: [ { city: "hyderabad", theater: "PVR Inorbit Mall, Madhapur", address: "Inorbit Mall, Madhapur, Hyderabad" } ], timings: ["10:15 AM", "1:45 PM", "5:15 PM", "8:45 PM"], price: 290, poster: "../static/images/batman.jpeg" },
+            { id: 20, name: "Mission: Impossible - Dead Reckoning", description: "Ethan Hunt and his IMF team embark on their most dangerous mission yet.", languages: ["English", "Hindi", "Telugu", "Tamil"], locations: [ { city: "hyderabad", theater: "PVR ICON, Hitech City", address: "Hitech City, Hyderabad" } ], timings: ["11:00 AM", "2:30 PM", "6:00 PM", "9:30 PM"], price: 300, poster: "../static/images/mission.jpeg" },
+            { id: 21, name: "Leo", description: "A cafe owner's peaceful life turns upside down when his past comes back to haunt him.", languages: ["Tamil", "Telugu", "Hindi", "Kannada"], locations: [ { city: "hyderabad", theater: "AMB Cinemas", address: "Gachibowli, Hyderabad" } ], timings: ["10:15 AM", "1:45 PM", "5:15 PM", "8:45 PM"], price: 190, poster: "../static/images/leo.jpeg" },
+            { id: 22, name: "Jailer", description: "A prison warden takes on a dangerous criminal organization to protect his family.", languages: ["Tamil", "Telugu", "Hindi", "Kannada", "Malayalam"], locations: [ { city: "hyderabad", theater: "PVR Next Galleria Mall", address: "Panjagutta, Hyderabad" } ], timings: ["9:30 AM", "12:45 PM", "4:00 PM", "7:15 PM", "10:30 PM"], price: 180, poster: "../static/images/jailer.jpeg" },
+            { id: 23, name: "Ponniyin Selvan: Part 2", description: "The epic conclusion to the saga of the Chola dynasty and the battle for the throne.", languages: ["Tamil", "Telugu", "Hindi", "Malayalam", "Kannada"], locations: [ { city: "hyderabad", theater: "Asian Cine Square", address: "Uppal, Hyderabad" } ], timings: ["10:00 AM", "2:00 PM", "6:00 PM", "10:00 PM"], price: 200, poster: "../static/images/ps.jpeg" },
+            { id: 24, name: "Vikram", description: "A special agent is tasked with investigating a series of mysterious murders.", languages: ["Tamil", "Telugu", "Hindi", "Malayalam"], locations: [ { city: "hyderabad", theater: "Prasads Multiplex", address: "Necklace Road, Hyderabad" } ], timings: ["11:15 AM", "2:45 PM", "6:15 PM", "9:45 PM"], price: 190, poster: "../static/images/vikram.jpeg" },
+            { id: 25, name: "Kaithi", description: "A prisoner on his way to meet his daughter gets caught in a face-off between police and drug lords.", languages: ["Tamil", "Telugu"], locations: [ { city: "hyderabad", theater: "PVR RK Cineplex", address: "Banjara Hills, Hyderabad" } ], timings: ["10:30 AM", "1:30 PM", "4:30 PM", "7:30 PM", "10:30 PM"], price: 175, poster: "../static/images/kaithi.jpeg" },
+            { id: 26, name: "Kantara", description: "A conflict erupts between villagers and evil forces when a divine spirit protects a forest and its people.", languages: ["Kannada", "Telugu", "Tamil", "Hindi", "Malayalam"], locations: [ { city: "hyderabad", theater: "PVR Punjagutta", address: "Punjagutta, Hyderabad" } ], timings: ["9:45 AM", "1:15 PM", "4:45 PM", "8:15 PM"], price: 180, poster: "../static/images/kantara.jpeg" },
+            { id: 27, name: "KGF: Chapter 2", description: "Rocky takes control of the Kolar Gold Fields and becomes both savior and oppressor.", languages: ["Kannada", "Telugu", "Tamil", "Hindi", "Malayalam"], locations: [ { city: "hyderabad", theater: "INOX GVK One", address: "Banjara Hills, Hyderabad" } ], timings: ["10:15 AM", "1:45 PM", "5:15 PM", "8:45 PM"], price: 210, poster: "../static/images/kgf.jpeg" },
+            { id: 28, name: "Romancham", description: "A group of friends experience supernatural events after using an Ouija board.", languages: ["Malayalam", "Telugu", "Tamil"], locations: [ { city: "hyderabad", theater: "Platinum Movietime", address: "Gachibowli, Hyderabad" } ], timings: ["11:00 AM", "2:30 PM", "6:00 PM", "9:30 PM"], price: 170, poster: "../static/images/Romancham.jpeg" },
+            { id: 29, name: "2018", description: "Based on the true events of the 2018 Kerala floods, the story of hope and survival.", languages: ["Malayalam", "Telugu", "Tamil", "Hindi"], locations: [ { city: "hyderabad", theater: "PVR Central", address: "Panjagutta, Hyderabad" } ], timings: ["10:30 AM", "1:45 PM", "5:00 PM", "8:15 PM"], price: 180, poster: "../static/images/2018.jpeg" },
+            { id: 30, name: "Stree 2", description: "The ghost of Stree returns to haunt the village of Chanderi once again.", languages: ["Hindi", "Telugu", "Tamil"], locations: [ { city: "hyderabad", theater: "PVR ICON", address: "Hitech City, Hyderabad" } ], timings: ["11:15 AM", "2:45 PM", "6:15 PM", "9:45 PM"], price: 190, poster: "../static/images/Stree 2.jpeg" }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const header = document.querySelector('nav');
+            const movieCards = document.querySelectorAll('.movie-card');
+
+            if (header && movieCards.length > 0) {
+                window.addEventListener('scroll', () => {
+                    header.style.backgroundColor = window.scrollY > 50 
+                        ? 'rgba(0, 0, 0, 0.98)' 
+                        : 'rgba(0, 0, 0, 0.85)';
+                });
+
+                const animateCards = () => {
+                    movieCards.forEach(card => {
+                        const cardTop = card.getBoundingClientRect().top;
+                        if (cardTop < window.innerHeight - 100) {
+                            card.style.opacity = '1';
+                            card.style.transform = 'translateY(0)';
+                        }
+                    });
+                };
+                
+                window.addEventListener('scroll', animateCards);
+                animateCards();
+            }
+        });
+
+        const modal = document.getElementById('theaterModal');
+        const closeBtn = document.querySelector('.close-modal');
+
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+        }
+
+        window.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        function selectTheater(theaterId, theaterName, address) {
+            document.querySelectorAll('.theater-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+
+            document.getElementById('theater-' + theaterId).classList.add('selected');
+
+            document.getElementById('selectedTheater').value = theaterName;
+            document.getElementById('selectedTheaterId').value = theaterId;
+            document.getElementById('selectedAddress').value = address;
+
+            checkFormValidity();
+        }
+
+        function checkFormValidity() {
+            const theater = document.getElementById('selectedTheater').value;
+            const proceedButton = document.getElementById('proceedToBooking');
+
+            if (theater) {
+                proceedButton.removeAttribute('disabled');
+            } else {
+                proceedButton.setAttribute('disabled', 'disabled');
+            }
+        }
+
+        function bookMovie(movieTitle, movieId, price) {
+            const theaterSelect = document.getElementById(`theater-${movieId}`);
+            if (!theaterSelect || !theaterSelect.value) {
+                alert("Please select a theater before proceeding.");
+                return;
+            }
+
+            const theaterIndex = theaterSelect.value;
+            const movie = movies.find(m => m.id === movieId);
+            const city = document.getElementById('city').value.toLowerCase();
+            const cityTheaters = movie.locations.filter(loc => loc.city.toLowerCase() === city);
+            const theater = cityTheaters[theaterIndex];
+
+            if (!theater) {
+                alert("Theater not found");
+                return;
+            }
+
+            const params = new URLSearchParams({
+                movie: movieTitle,
+                theater: theater.theater,
+                address: theater.address,
+                price: price
+            });
+
+            window.location.href = `/b1?${params.toString()}`;
+        }
+
+        document.getElementById('searchForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const language = document.getElementById('language').value;
+            const city = document.getElementById('city').value.toLowerCase();
+            const movieResults = document.getElementById('movieResults');
+            const searchResultsSection = document.getElementById('searchResultsSection');
+
+            movieResults.innerHTML = "";
+            searchResultsSection.style.display = "none";
+
+            if (typeof movies === "undefined" || !Array.isArray(movies)) {
+                console.error("Error: 'movies' is not loaded.");
+                return;
+            }
+
+            const filteredMovies = movies.filter(movie => 
+                movie.languages.includes(language) && 
+                movie.locations.some(loc => loc.city.toLowerCase() === city)
+            );
+
+            if (filteredMovies.length > 0) {
+                searchResultsSection.style.display = "block";
+
+                filteredMovies.forEach(movie => {
+                    const movieCard = document.createElement('div');
+                    movieCard.classList.add('search-result-card');
+
+                    const cityTheaters = movie.locations.filter(loc => loc.city.toLowerCase() === city);
+
+                    movieCard.innerHTML = `
+                        <div class="result-card-content">
+                            <div class="result-poster">
+                                <img src="${movie.poster}" alt="${movie.name} poster">
+                            </div>
+                            <div class="result-details">
+                                <h3 class="result-title">${movie.name}</h3>
+                                <p class="result-description">${movie.description}</p>
+                                <div class="result-info">
+                                    <div class="result-languages">
+                                        <strong>Languages:</strong> ${movie.languages.join(", ")}
+                                    </div>
+                                    <div class="result-price">
+                                        <span class="price-tag">₹${movie.price}</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="theater-selection">
+                                    <label for="theater-${movie.id}"><strong>Select Theater:</strong></label>
+                                    <select id="theater-${movie.id}" class="theater-dropdown">
+                                        <option value="">Choose a theater</option>
+                                        ${cityTheaters.map((location, index) => 
+                                            `<option value="${index}">${location.theater} - ${location.address}</option>`
+                                        ).join('')}
+                                    </select>
+                                </div>
+                                
+                                <div class="result-action">
+                                    <button id="book-btn-${movie.id}" class="book-btn" disabled 
+                                        onclick="bookMovie('${movie.name.replace(/'/g, "\\'").replace(/"/g, '\\"')}', ${movie.id}, ${movie.price})">
+                                        Book Now
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    movieResults.appendChild(movieCard);
+
+                    const theaterSelect = document.getElementById(`theater-${movie.id}`);
+                    if (theaterSelect) {
+                        theaterSelect.addEventListener('change', function() {
+                            const bookBtn = document.getElementById(`book-btn-${movie.id}`);
+                            bookBtn.disabled = !this.value;
+                        });
+                    }
+                });
+            } else {
+                searchResultsSection.style.display = "block";
+                movieResults.innerHTML = `<p class="no-results">No movies found for ${language} in ${city.charAt(0).toUpperCase() + city.slice(1)}</p>`;
+            }
+
+            searchResultsSection.scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>

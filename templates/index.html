@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MovieMagic - Welcome</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #e50914;
+            --bg-color: #0a0a0a;
+            --secondary-color: #2a2a2a;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                        url('../static/images/backgroundmovie\ booking.jpg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Poppins', sans-serif;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .profile-header {
+            position: fixed;
+            top: 30px;
+            left: 40px;
+            background: rgba(229, 9, 20, 0.9);
+            padding: 1rem 2rem;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .profile-header span {
+            color: white;
+            font-weight: 700;
+            font-size: 1.4em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .profile-header:hover {
+            transform: scale(1.05);
+            background: rgba(229, 9, 20, 1);
+        }
+
+        .get-started-button {
+            padding: 1.5rem 4rem;
+            font-size: 1.4em;
+            background: rgba(229, 9, 20, 0.9);
+            color: white;
+            border: none;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .get-started-button:hover {
+            transform: translateY(-5px) scale(1.08);
+            background: rgba(229, 9, 20, 1);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .welcome-container {
+            text-align: center;
+            padding: 4rem;
+            color: white;
+            max-width: 800px;
+            animation: fadeIn 1.5s ease-in;
+            background: transparent;
+            border-radius: 15px;
+            backdrop-filter: blur(2px);
+        }
+
+        h1 {
+            font-size: 4.5em;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            text-shadow: 3px 3px 15px rgba(0, 0, 0, 0.9);
+            background: linear-gradient(45deg, #ffffff, #e50914);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        @keyframes fadeIn {
+            from { 
+                opacity: 0; 
+                transform: translateY(30px) scale(0.95);
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .profile-header {
+                padding: 0.8rem 1.5rem;
+                left: 20px;
+                top: 20px;
+            }
+            .profile-header span {
+                font-size: 1.1em;
+            }
+            h1 {
+                font-size: 2.5em;
+            }
+            .get-started-button {
+                padding: 1rem 3rem;
+                font-size: 1.1em;
+            }
+            .welcome-container {
+                padding: 2rem;
+                margin: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-header">
+        <span>MovieMagic</span>
+    </div>
+
+    <div class="welcome-container">
+        <h1>Your Cinema Experience</h1>
+        <a href="{{ url_for('login') }}" class="get-started-button">Get Started</a>
+    </div>
+</body>
+</html>
