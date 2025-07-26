@@ -248,6 +248,6 @@ def send_booking_confirmation(booking):
 
 if __name__ == '__main__':
     # Using Flask's built-in server as requested
-    port = int(os.environ.get('PORT', 5000))
+    
     # You can set debug=False in production
-    app.run(host='0.0.0.0', port=port, debug=True)
+    app.run(debug=True, host='0.0.0.0', port=5000)
